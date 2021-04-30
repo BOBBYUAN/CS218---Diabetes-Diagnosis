@@ -19,23 +19,28 @@ public class PatientRepository {
         return patient;
     }
 
-    public Patient getPatientById(String patientId) {
-        return dynamoDBMapper.load(Patient.class, patientId);
+    public Patient getPatientByEmail(String email) {
+        return dynamoDBMapper.load(Patient.class, email);
     }
 
-    public String delete(String patientId) {
-        Patient patient = dynamoDBMapper.load(Patient.class, patientId);
+    public String getIdByEmail(String email) {
+        Patient patient = dynamoDBMapper.load(Patient.class, email);
+        return patient.getPatient_id();
+    }
+
+    public String delete(String email) {
+        Patient patient = dynamoDBMapper.load(Patient.class, email);
         dynamoDBMapper.delete(patient);
         return "Patient deleted";
     }
 
-    public String update(String patientId, Patient patient) {
+    public String update(String email, Patient patient) {
         dynamoDBMapper.save(patient,
                 new DynamoDBSaveExpression()
-        .withExpectedEntry("patient_id",
+        .withExpectedEntry("email",
                 new ExpectedAttributeValue(
-                        new AttributeValue().withS(patientId)
+                        new AttributeValue().withS(email)
                 )));
-        return patientId;
+        return email;
     }
 }

@@ -11,23 +11,27 @@ public class PatientController {
     @Autowired
     private PatientRepository patientRepository;
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/patient")
     public Patient savePatient(@RequestBody Patient patient) {
         return patientRepository.save(patient);
     }
 
-    @GetMapping("/patient/{id}")
-    public Patient getPatient(@PathVariable("id") String patientId) {
-        return patientRepository.getPatientById(patientId);
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/patient/{email}")
+    public Patient getPatient(@PathVariable("email") String email) {
+        return patientRepository.getPatientByEmail(email);
     }
 
-    @DeleteMapping("/patient/{id}")
-    public String deletePatient(@PathVariable("id") String patientId) {
-        return patientRepository.delete(patientId);
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @DeleteMapping("/patient/{email}")
+    public String deletePatient(@PathVariable("email") String email) {
+        return patientRepository.delete(email);
     }
 
-    @PutMapping("/patient/{id}")
-    public String updatePatient(@PathVariable("id") String patientId, @RequestBody Patient patient) {
-        return patientRepository.update(patientId,patient);
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PutMapping("/patient/{email}")
+    public String updatePatient(@PathVariable("email") String email, @RequestBody Patient patient) {
+        return patientRepository.update(email,patient);
     }
 }
