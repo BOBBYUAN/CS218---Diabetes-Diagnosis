@@ -1,4 +1,5 @@
 import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
 import Navigation from './Navigation';
 import '../App.css';
 import * as routes from '../Config/routes';
@@ -11,20 +12,13 @@ import ProfilePage from './Profile'
 const App = ()=> {
   const loggedIn = 0
   return (
+    <div>
+
     <Router>
       <div>
         <Navigation/>
-        <Route exact path={routes.LOGIN} render={() => (
-            loggedIn
-            ? (<Redirect to={routes.HOME} />)
-            : (<LoginPage />)
-        )}/>
         <Route exact path={routes.HOME} render={() => (
             <HomePage />
-            
-        )}/>
-        <Route path={routes.SIGNUP} render={() => (
-          <SignupPage /> 
         )}/>
         <Route path={routes.ABOUT} render={() => (
           <AboutPage /> 
@@ -33,7 +27,8 @@ const App = ()=> {
           <ProfilePage /> 
         )}/>
       </div>
-    </Router>);
+    </Router>
+    </div>);
 }
 
 export default App;

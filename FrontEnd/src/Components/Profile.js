@@ -20,6 +20,8 @@ import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import Copyright from './Copyright';
 
+import {getPatient, setPatient} from '../Services/PersonalInfo'
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -43,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Profile() {
     const classes = useStyles();
 
-    const [selectedDate, setSelectedDate] = React.useState(new Date('1995-07-01T21:11:54'));
+    const [selectedDate, setSelectedDate] = React.useState(new Date('1995-07-01'));
     const [gender, setGender] = React.useState('female'); 
     const [polyuria, setPolyuria] = React.useState(0); 
     const [polydipsia, setPolydipsia] = React.useState(0); 
@@ -53,6 +55,14 @@ export default function Profile() {
     const [thrush, setThrush] = React.useState(0); 
     const [visual, setVisual] = React.useState(0); 
     const [itching, setItching] = React.useState(0); 
+
+    const [irritability, setIrritability] = React.useState(0); 
+    const [delayed_healing, setDelayedHealing] = React.useState(0); 
+    const [partial_paresis, setPartialParesis] = React.useState(0); 
+    const [muscle_stiffness, setMuscleStiffness] = React.useState(0); 
+    const [alopecia, setAlopecia] = React.useState(0);
+    const [obesity, setObesity] = React.useState(0);  
+
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
@@ -102,6 +112,67 @@ export default function Profile() {
         const value = event.target.value
         setItching(value);
     };
+    //
+
+    const handleIrritabilityChange = (event) => {
+        const value = event.target.value
+        setIrritability(value);
+    };
+
+    const handleDelayedHealingChange = (event) => {
+        const value = event.target.value
+        setDelayedHealing(value);
+    };
+
+    const handlePartialParesisChange = (event) => {
+        const value = event.target.value
+        setPartialParesis(value);
+    };
+
+    const handleMuscleStiffnessChange = (event) => {
+        const value = event.target.value
+        setMuscleStiffness(value);
+    };
+
+    const handleAlopeciaChange = (event) => {
+        const value = event.target.value
+        setAlopecia(value);
+    };
+
+    const handleObesityChange = (event) => {
+        const value = event.target.value
+        setObesity(value);
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        const email = "cs218@sjsu.edu"
+        const temp = selectedDate.getMonth() 
+        const month = temp >= 9 ? temp+1 : '0'+temp
+        const dob = selectedDate.getFullYear() + '-' + month + '-' + selectedDate.getDate()
+        const data = {
+            email: email,
+            dob: dob,
+            gender: gender, 
+            polyuria: polyuria,
+            polydipsia: polydipsia,
+            weight_loss: weight_loss,
+            weakness: weakness,
+            polyphagia: polyphagia, 
+            genital_thrush: thrush, 
+            visual_blurring: visual,
+            itching: itching,
+            irritability: irritability,
+            delayed_healing: delayed_healing,
+            partial_paresis: partial_paresis,
+            muscle_stiffness: muscle_stiffness,
+            alopecia: alopecia,
+            obesity: obesity
+        }
+        setPatient(data)
+    }
+
+    getPatient("cs218@sjsu.edu")
     
     return (
     <Container component="main" maxWidth="xs">
@@ -216,6 +287,64 @@ export default function Profile() {
                         <FormControlLabel value="0" control={<Radio />} label="No" />
                     </RadioGroup>
                 </FormControl>
+                <br/> 
+
+                <FormControl component="fieldset">
+                    <FormLabel component="legend">Irritability</FormLabel>
+                    <RadioGroup aria-label="irritability" name="irritability" value={irritability} onChange={handleIrritabilityChange}>
+                        <FormControlLabel value="1" control={<Radio />} label="Yes" />
+                        <FormControlLabel value="0" control={<Radio />} label="No" />
+                    </RadioGroup>
+                </FormControl>
+                <br/>
+
+
+                <FormControl component="fieldset">
+                    <FormLabel component="legend">Delayed Healing</FormLabel>
+                    <RadioGroup aria-label="delayed_healing" name="delayed_healing" value={delayed_healing} onChange={handleDelayedHealingChange}>
+                        <FormControlLabel value="1" control={<Radio />} label="Yes" />
+                        <FormControlLabel value="0" control={<Radio />} label="No" />
+                    </RadioGroup>
+                </FormControl>
+                <br/>
+
+
+                <FormControl component="fieldset">
+                    <FormLabel component="legend">Partial Paresis (Paralysis - Muscle weakness by nerve damage)</FormLabel>
+                    <RadioGroup aria-label="paresis" name="paresis" value={partial_paresis} onChange={handlePartialParesisChange}>
+                        <FormControlLabel value="1" control={<Radio />} label="Yes" />
+                        <FormControlLabel value="0" control={<Radio />} label="No" />
+                    </RadioGroup>
+                </FormControl>
+                <br/>
+
+
+                <FormControl component="fieldset">
+                    <FormLabel component="legend">Muscle Stiffness</FormLabel>
+                    <RadioGroup aria-label="muscle_stiffness" name="muscle_stiffness" value={muscle_stiffness} onChange={handleMuscleStiffnessChange}>
+                        <FormControlLabel value="1" control={<Radio />} label="Yes" />
+                        <FormControlLabel value="0" control={<Radio />} label="No" />
+                    </RadioGroup>
+                </FormControl>
+                <br/>
+
+
+                <FormControl component="fieldset">
+                    <FormLabel component="legend">Alopecia (Hair loss)</FormLabel>
+                    <RadioGroup aria-label="alopecia" name="alopecia" value={alopecia} onChange={handleAlopeciaChange}>
+                        <FormControlLabel value="1" control={<Radio />} label="Yes" />
+                        <FormControlLabel value="0" control={<Radio />} label="No" />
+                    </RadioGroup>
+                </FormControl>
+                <br />
+                    
+                <FormControl component="fieldset">
+                    <FormLabel component="legend">Obesity</FormLabel>
+                    <RadioGroup aria-label="obesity" name="obesity" value={obesity} onChange={handleObesityChange}>
+                        <FormControlLabel value="1" control={<Radio />} label="Yes" />
+                        <FormControlLabel value="0" control={<Radio />} label="No" />
+                    </RadioGroup>
+                </FormControl>
             
             <Button
                 type="submit"
@@ -223,6 +352,7 @@ export default function Profile() {
                 variant="contained"
                 color="primary"
                 className={classes.submit}
+                onClick = {handleSubmit}
             >
                 Submit
             </Button>
