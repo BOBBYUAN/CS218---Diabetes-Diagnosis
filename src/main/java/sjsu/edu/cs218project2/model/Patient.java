@@ -23,7 +23,7 @@ public class Patient {
     private String patient_id;
 
     @DynamoDBAttribute(attributeName = "gender")
-    private String gender;
+    private Integer gender;
 
     @DynamoDBAttribute(attributeName = "polyuria")
     private Integer polyuria;
