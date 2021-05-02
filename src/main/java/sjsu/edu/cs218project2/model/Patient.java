@@ -1,3 +1,4 @@
+//“SJSU CS 218 Spring 2021 TEAM3”
 package sjsu.edu.cs218project2.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
