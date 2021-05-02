@@ -22,6 +22,10 @@ import Copyright from './Copyright';
 
 import {getPatient, setPatient} from '../Services/PersonalInfo'
 
+//auth 
+import { withAuthenticator} from '@aws-amplify/ui-react'
+import {Auth} from 'aws-amplify';
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -42,11 +46,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Profile() {
+const Profile = ()=> {
     const classes = useStyles();
-    const [load, setLoad] = React.useState(0)
-
-    const [selectedDate, setSelectedDate] = React.useState(new Date('1995-07-01'));
+    
+    const [email, setEmail] = React.useState(''); 
+    const [selectedDate, setSelectedDate] = React.useState(new Date('1995-07-01T03:24:00'));
     const [gender, setGender] = React.useState(0); 
     const [polyuria, setPolyuria] = React.useState(0); 
     const [polydipsia, setPolydipsia] = React.useState(0); 
@@ -145,12 +149,54 @@ export default function Profile() {
         setObesity(value);
     };
 
+    const setPatientInfo = info =>{
+        const params = [
+            'email', 
+            'gender', 
+            'polyuria', 
+            'polydipsia', 
+            'weight_loss',
+            'weakness',
+            'polyphagia',
+            'genital_thrush',
+            'visual_blurring',
+            'itching',
+            'irritability',
+            'delayed_healing',
+            'partial_paresis',
+            'muscle_stiffness',
+            'alopecia',
+            'obesity'
+        ]
+        params.forEach(p=>{
+            info[p] = info[p].toString()
+        })
+        setEmail(info.email)  
+        setSelectedDate(new Date(info.dob+'T03:24:00'))
+        setGender(info.gender)
+        setPolyuria(info.polyuria)
+        setPolydipsia(info.polydipsia)
+        setWeightLoss(info.weight_loss)
+        setWeakness(info.weakness)
+        setPolyphagia(info.polyphagia)
+        setThrush(info.genital_thrush)
+        setVisual(info.visual_blurring)
+        setItching(info.itching)
+        setIrritability(info.irritability)
+        setDelayedHealing(info.delayed_healing)
+        setPartialParesis(info.partial_paresis)
+        setMuscleStiffness(info.muscle_stiffness)
+        setAlopecia(info.alopecia)
+        setObesity(info.obesity)
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault()
-        const email = "cs218@sjsu.edu"
+    
         const temp = selectedDate.getMonth() 
-        const month = temp >= 9 ? temp+1 : '0'+temp
-        const dob = selectedDate.getFullYear() + '-' + month + '-' + selectedDate.getDate()
+        const month = temp >= 9 ? temp+1 : '0'+(temp+1)
+        const date = selectedDate.getDate() >= 10 ? selectedDate.getDate() : '0'+selectedDate.getDate()
+        const dob = selectedDate.getFullYear() + '-' + month + '-' + date
         const data = {
             email: email,
             dob: dob,
@@ -172,10 +218,19 @@ export default function Profile() {
         }
         setPatient(data)
     }
-    if (load === 0){
-        getPatient("cs218@sjsu.edu")
-        setLoad(1)
-    }
+
+    //get patient info
+    React.useEffect(async ()=>{
+        const info = await Auth.currentUserInfo()
+        const tempEmail = info.attributes.email
+        const patientInfo = await getPatient(tempEmail)
+        console.log(patientInfo)
+        if (patientInfo.email === undefined){
+            setEmail(tempEmail)
+        } else {
+            setPatientInfo(patientInfo)
+        }
+    }, [])
     
     return (
     <Container component="main" maxWidth="xs">
@@ -365,3 +420,5 @@ export default function Profile() {
     </Container>
   );
 }
+
+export default withAuthenticator(Profile)

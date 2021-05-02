@@ -1,5 +1,4 @@
 export const HOME = '/';
-export const SIGNUP = '/signup';
 export const PROFILE = '/profile';
-export const LOGIN = '/login';
+export const LOGOUT = '/logout';
 export const ABOUT = '/about';
