@@ -1,1 +1,1 @@
-export const backend_url = 'http://13.57.56.160:8080/'
+export const backend_url = 'http://ecs-alb-441047327.us-west-1.elb.amazonaws.com/'

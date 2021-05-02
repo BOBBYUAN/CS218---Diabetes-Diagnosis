@@ -1,5 +1,9 @@
 import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
+//auth 
 import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react'
+import Amplify, { Auth } from 'aws-amplify';
+import awsconfig from '../Config/aws-exports';
+
 import Navigation from './Navigation';
 import '../App.css';
 import * as routes from '../Config/routes';
@@ -11,6 +15,7 @@ import ProfilePage from './Profile'
 
 const App = ()=> {
   const loggedIn = 0
+  //Amplify.configure(awsconfig);
   return (
     <div>
 
@@ -31,4 +36,4 @@ const App = ()=> {
     </div>);
 }
 
-export default App;
+export default (App);

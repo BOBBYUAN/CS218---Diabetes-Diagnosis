@@ -44,9 +44,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Profile() {
     const classes = useStyles();
+    const [load, setLoad] = React.useState(0)
 
     const [selectedDate, setSelectedDate] = React.useState(new Date('1995-07-01'));
-    const [gender, setGender] = React.useState('female'); 
+    const [gender, setGender] = React.useState(0); 
     const [polyuria, setPolyuria] = React.useState(0); 
     const [polydipsia, setPolydipsia] = React.useState(0); 
     const [weight_loss, setWeightLoss] = React.useState(0); 
@@ -153,26 +154,28 @@ export default function Profile() {
         const data = {
             email: email,
             dob: dob,
-            gender: gender, 
-            polyuria: polyuria,
-            polydipsia: polydipsia,
-            weight_loss: weight_loss,
-            weakness: weakness,
-            polyphagia: polyphagia, 
-            genital_thrush: thrush, 
-            visual_blurring: visual,
-            itching: itching,
-            irritability: irritability,
-            delayed_healing: delayed_healing,
-            partial_paresis: partial_paresis,
-            muscle_stiffness: muscle_stiffness,
-            alopecia: alopecia,
-            obesity: obesity
+            gender: parseInt(gender), 
+            polyuria: parseInt(polyuria),
+            polydipsia: parseInt(polydipsia),
+            weight_loss: parseInt(weight_loss),
+            weakness: parseInt(weakness),
+            polyphagia: parseInt(polyphagia), 
+            genital_thrush: parseInt(thrush), 
+            visual_blurring: parseInt(visual),
+            itching: parseInt(itching),
+            irritability: parseInt(irritability),
+            delayed_healing: parseInt(delayed_healing),
+            partial_paresis: parseInt(partial_paresis),
+            muscle_stiffness: parseInt(muscle_stiffness),
+            alopecia: parseInt(alopecia),
+            obesity: parseInt(obesity)
         }
         setPatient(data)
     }
-
-    getPatient("cs218@sjsu.edu")
+    if (load === 0){
+        getPatient("cs218@sjsu.edu")
+        setLoad(1)
+    }
     
     return (
     <Container component="main" maxWidth="xs">
@@ -207,8 +210,8 @@ export default function Profile() {
                 <FormControl component="fieldset">
                     <FormLabel component="legend">Gender</FormLabel>
                     <RadioGroup aria-label="gender" name="gender1" value={gender} onChange={handleGenderChange}>
-                        <FormControlLabel value="female" control={<Radio />} label="Female" />
-                        <FormControlLabel value="male" control={<Radio />} label="Male" />
+                        <FormControlLabel value="0" control={<Radio />} label="Female" />
+                        <FormControlLabel value="1" control={<Radio />} label="Male" />
                     </RadioGroup>
                 </FormControl>
                 <br/>

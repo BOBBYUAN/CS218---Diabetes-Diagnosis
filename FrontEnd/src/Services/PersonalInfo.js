@@ -13,7 +13,7 @@ export const getPatient = async (id)=>{
 }
 
 export const setPatient = async (params)=>{
-    const url = backend_url + 'patient/'
+    const url = backend_url + 'patient'
     try {
         const response = await axios.post(url, params);
         console.log(response);
