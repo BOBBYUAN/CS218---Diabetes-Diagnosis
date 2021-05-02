@@ -22,11 +22,23 @@ public class Patient {
     @DynamoDBAttribute(attributeName = "patient_id")
     private String patient_id;
 
+    @DynamoDBAttribute(attributeName = "dob")
+    private String dob;
+
     @DynamoDBAttribute(attributeName = "gender")
     private Integer gender;
 
     @DynamoDBAttribute(attributeName = "polyuria")
     private Integer polyuria;
+
+    @DynamoDBAttribute(attributeName = "alopecia")
+    private Integer alopecia;
+
+    @DynamoDBAttribute(attributeName = "irritability")
+    private Integer irritability;
+
+    @DynamoDBAttribute(attributeName = "muscle_stiffness")
+    private Integer muscle_stiffness;
 
     @DynamoDBAttribute(attributeName = "polydipsia")
     private Integer polydipsia;
@@ -46,7 +58,16 @@ public class Patient {
     @DynamoDBAttribute(attributeName = "visual_blurring")
     private Integer visual_blurring;
 
+    @DynamoDBAttribute(attributeName = "delayed_healing")
+    private Integer delayed_healing;
+
+    @DynamoDBAttribute(attributeName = "partial_paresis")
+    private Integer partial_paresis;
+
     @DynamoDBAttribute(attributeName = "itching")
     private Integer itching;
+
+    @DynamoDBAttribute(attributeName = "obesity")
+    private Integer obesity;
 
 }

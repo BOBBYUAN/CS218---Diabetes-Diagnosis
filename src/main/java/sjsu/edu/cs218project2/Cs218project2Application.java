@@ -15,7 +15,7 @@ public class Cs218project2Application {
 
 	@GetMapping("/")
 	public String hello() {
-		return "Hello From CS218 Team 3 v7";
+		return "Hello From CS218 Team 3 V8";
 	}
 
 }
