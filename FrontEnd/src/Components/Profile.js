@@ -1,3 +1,4 @@
+//SJSU CS 218 Spring 2021 TEAM3
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -21,6 +22,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import Copyright from './Copyright';
 
 import {getPatient, setPatient} from '../Services/PersonalInfo'
+import {predict} from '../Services/Prediction'
 
 //auth 
 import { withAuthenticator} from '@aws-amplify/ui-react'
@@ -67,6 +69,8 @@ const Profile = ()=> {
     const [muscle_stiffness, setMuscleStiffness] = React.useState(0); 
     const [alopecia, setAlopecia] = React.useState(0);
     const [obesity, setObesity] = React.useState(0);  
+
+    const [message, setMessage] = React.useState('')
 
 
     const handleDateChange = (date) => {
@@ -190,7 +194,7 @@ const Profile = ()=> {
         setObesity(info.obesity)
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault()
     
         const temp = selectedDate.getMonth() 
@@ -217,6 +221,23 @@ const Profile = ()=> {
             obesity: parseInt(obesity)
         }
         setPatient(data)
+        data.age = _calculateAge(selectedDate)
+        delete data.email 
+        delete data.dob 
+        
+        const resp = await predict(data)
+        console.log(resp)
+        if(resp.predict === 1){
+            setMessage('We predict that you have early stage diabetes. Please check with your primary care physician for diagnosis')
+        } else {
+            setMessage('We predict that you do not have diabetes. Take care!')
+        }
+    }
+
+    const _calculateAge= (dob)=> { 
+        const ageDiff = Date.now() - dob.getTime();
+        const ageDate = new Date(ageDiff); 
+        return Math.abs(ageDate.getUTCFullYear() - 1970)
     }
 
     //get patient info
@@ -224,7 +245,7 @@ const Profile = ()=> {
         const info = await Auth.currentUserInfo()
         const tempEmail = info.attributes.email
         const patientInfo = await getPatient(tempEmail)
-        console.log(patientInfo)
+        
         if (patientInfo.email === undefined){
             setEmail(tempEmail)
         } else {
@@ -415,6 +436,9 @@ const Profile = ()=> {
                 Submit
             </Button>
             </form>
+            <Typography component="h1" variant="h5">
+               {message}
+            </Typography>
         </div>
         <Copyright />
     </Container>
