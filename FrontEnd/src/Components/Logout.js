@@ -1,3 +1,4 @@
+//SJSU CS 218 Spring 2021 TEAM3
 import React from 'react'
 import {Auth} from 'aws-amplify';
 import Typography from '@material-ui/core/Typography';

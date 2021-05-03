@@ -1,3 +1,4 @@
+//SJSU CS 218 Spring 2021 TEAM3
 import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 import Amplify from 'aws-amplify';
 import awsconfig from '../aws-exports';

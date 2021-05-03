@@ -1,3 +1,4 @@
+//SJSU CS 218 Spring 2021 TEAM3
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
